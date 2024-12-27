@@ -50,7 +50,7 @@ class MainPage extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 25),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class MainPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                        height: 470,
+                        height: 480,
                         child: ListView.builder(
                             itemCount: movies.length,
                             scrollDirection: Axis.horizontal,
@@ -151,7 +151,7 @@ class MainPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                        height: 470,
+                        height: 480,
                         child: ListView.builder(
                             itemCount: tvShows.length,
                             scrollDirection: Axis.horizontal,

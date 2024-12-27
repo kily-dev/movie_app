@@ -24,7 +24,8 @@ class MovieTile extends StatelessWidget {
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         //movie poster
         ClipRRect(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12), topRight: Radius.circular(12)),
           child: Image.network(
             'https://image.tmdb.org/t/p/w500$posterPath', // Construct the full URL
             fit: BoxFit.fill, // Adjust the image fit

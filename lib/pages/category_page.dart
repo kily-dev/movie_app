@@ -41,7 +41,7 @@ class CategoryPage extends StatelessWidget {
                       final categories = snapshot.data!["genres"].toList();
                       debugPrint(jsonEncode(categories[0]['name']));
                       return SizedBox(
-                        height: 150,
+                        height: 125,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: categories.length,
@@ -79,7 +79,7 @@ class CategoryPage extends StatelessWidget {
                       final categories = snapshot.data!["genres"].toList();
                       debugPrint(jsonEncode(categories[0]['name']));
                       return SizedBox(
-                        height: 150,
+                        height: 125,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: categories.length,
