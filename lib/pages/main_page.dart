@@ -138,6 +138,7 @@ class MainPage extends StatelessWidget {
                               final movie = movies[index];
                               debugPrint(jsonEncode(movie));
                               return MovieTile(
+                                id: movie["id"],
                                 title: movie["title"],
                                 posterPath: movie["poster_path"],
                               );
@@ -160,6 +161,7 @@ class MainPage extends StatelessWidget {
                               final tvShow = tvShows[index];
                               debugPrint(jsonEncode(tvShow));
                               return MovieTile(
+                                id: tvShow["id"],
                                 title: tvShow["name"],
                                 posterPath: tvShow["poster_path"],
                               );
