@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/components/movie_tile.dart';
+import 'package:movie_app/components/next_page_container.dart';
+import 'package:movie_app/pages/search_results.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 import 'dart:convert';
 
@@ -54,14 +56,31 @@ class MainPage extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Search',
-                style: TextStyle(
-                  color: Colors.grey,
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: const InputDecoration(
+                    hintText: 'Search',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  onSubmitted: (value) {
+                    print('Search query: $value');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NextPageContainer(
+                            title: "Search Results for \"${value}\"",
+                            child: SearchResults(query: value)),
+                      ),
+                    );
+                  },
+                  textInputAction: TextInputAction.done,
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.search,
                 color: Colors.grey,
               )
@@ -141,6 +160,7 @@ class MainPage extends StatelessWidget {
                                 id: movie["id"],
                                 title: movie["title"],
                                 posterPath: movie["poster_path"],
+                                type: "movie",
                               );
                             })),
                     Padding(
@@ -164,6 +184,7 @@ class MainPage extends StatelessWidget {
                                 id: tvShow["id"],
                                 title: tvShow["name"],
                                 posterPath: tvShow["poster_path"],
+                                type: "tv",
                               );
                             })),
                   ],

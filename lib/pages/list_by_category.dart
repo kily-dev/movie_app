@@ -65,6 +65,8 @@ class ListByCategory extends StatelessWidget {
                                 id: movies[index]["id"],
                                 posterPath: movies[index]["poster_path"],
                                 title: title_to_pass,
+                                score: movies[index]["vote_average"],
+                                type: type,
                               );
                             }),
                       );

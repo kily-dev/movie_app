@@ -5,11 +5,13 @@ import 'package:movie_app/pages/content_detail.dart';
 class MovieTile extends StatelessWidget {
   final String title;
   final String? posterPath;
+  final String type;
   final int id;
 
   const MovieTile({
     required this.id,
     required this.title,
+    required this.type,
     this.posterPath, // Optional parameter
     Key? key,
   }) : super(key: key);
@@ -27,6 +29,7 @@ class MovieTile extends StatelessWidget {
                   child: ContentDetail(
                     id: id,
                     name: title,
+                    type: type,
                   )),
             ),
           );

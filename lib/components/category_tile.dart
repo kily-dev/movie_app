@@ -6,11 +6,13 @@ class CategoryTile extends StatelessWidget {
   final int id;
   final String title;
   final String type;
+  final String fullType;
 
   const CategoryTile({
     required this.id,
     required this.title,
     required this.type,
+    required this.fullType,
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +25,7 @@ class CategoryTile extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => NextPageContainer(
-                  title: "$title Movies",
+                  title: "$title $fullType",
                   child: ListByCategory(
                     id: id,
                     name: title,

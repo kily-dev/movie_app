@@ -49,6 +49,7 @@ class CategoryPage extends StatelessWidget {
                             return CategoryTile(
                                 id: categories[index]['id'],
                                 title: categories[index]['name'],
+                                fullType: "Movies",
                                 type: "movie");
                           },
                         ),
@@ -89,6 +90,7 @@ class CategoryPage extends StatelessWidget {
                             return CategoryTile(
                                 id: categories[index]['id'],
                                 title: categories[index]['name'],
+                                fullType: "TV Shows",
                                 type: "tv");
                           },
                         ),

@@ -12,12 +12,22 @@ class ContentDetail extends StatelessWidget {
 
   final int id;
   final String name;
+  final String type;
 
   ContentDetail({
     required this.id,
     required this.name,
+    required this.type,
     super.key,
   });
+
+  Future<Map<dynamic, dynamic>> getFuture() async {
+    if (type == "tv") {
+      return tmdb.v3.tv.getDetails(id);
+    } else {
+      return tmdb.v3.movies.getDetails(id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +37,7 @@ class ContentDetail extends StatelessWidget {
       body: ListView(
         children: [
           FutureBuilder(
-              future: tmdb.v3.movies.getDetails(id),
+              future: getFuture(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -65,27 +75,35 @@ class ContentDetail extends StatelessWidget {
                           child: Row(
                             children: [
                               SizedBox(
-                                height: 350,
-                                child: Image.network(
-                                  // ignore: prefer_interpolation_to_compose_strings
-                                  'https://image.tmdb.org/t/p/w500' +
-                                      details[
-                                          "poster_path"], // Construct the full URL
+                                height: 275,
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                  child: Image.network(
+                                    // ignore: prefer_interpolation_to_compose_strings
+                                    'https://image.tmdb.org/t/p/w500' +
+                                        details[
+                                            "poster_path"], // Construct the full URL
 
-                                  fit: BoxFit.fill, // Adjust the image fit
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      const Icon(
-                                    Icons.broken_image,
-                                    color: Colors.grey,
-                                    size: 50,
-                                  ), // Handle errors gracefully
+                                    fit: BoxFit.fill, // Adjust the image fit
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            const Icon(
+                                      Icons.broken_image,
+                                      color: Colors.grey,
+                                      size: 50,
+                                    ), // Handle errors gracefully
+                                  ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(20),
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Original Title: ",
@@ -100,6 +118,8 @@ class ContentDetail extends StatelessWidget {
                                       ],
                                     ),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Popularity: ",
@@ -113,9 +133,119 @@ class ContentDetail extends StatelessWidget {
                                         )
                                       ],
                                     ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Release Date: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          details["release_date"].toString(),
+                                          style: TextStyle(fontSize: 16),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Official Website: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          details["homepage"].toString(),
+                                          style: TextStyle(fontSize: 16),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Budget: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          details["budget"].toString(),
+                                          style: TextStyle(fontSize: 16),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Box Office: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          details["revenue"].toString(),
+                                          style: TextStyle(fontSize: 16),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Runtime: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          "${details["runtime"]} minutes",
+                                          style: TextStyle(fontSize: 16),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Language: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                        Text(
+                                          details["spoken_languages"][0]
+                                              ["english_name"],
+                                          style: TextStyle(fontSize: 16),
+                                        )
+                                      ],
+                                    ),
                                   ],
                                 ),
                               )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 48),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Overview:",
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              Text(details["overview"]),
                             ],
                           ),
                         )
