@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/components/next_page_container.dart';
 import 'package:movie_app/pages/content_detail.dart';
 
 class MovieTile extends StatelessWidget {
@@ -21,7 +22,12 @@ class MovieTile extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ContentDetail(id: id),
+              builder: (context) => NextPageContainer(
+                  title: title,
+                  child: ContentDetail(
+                    id: id,
+                    name: title,
+                  )),
             ),
           );
         },
@@ -50,6 +56,7 @@ class MovieTile extends StatelessWidget {
                     ), // Handle errors gracefully
                   ),
                 ),
+
                 // title
                 Text(
                   title,

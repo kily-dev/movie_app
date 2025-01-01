@@ -47,7 +47,9 @@ class CategoryPage extends StatelessWidget {
                           itemCount: categories.length,
                           itemBuilder: (context, index) {
                             return CategoryTile(
-                                title: categories[index]['name']);
+                                id: categories[index]['id'],
+                                title: categories[index]['name'],
+                                type: "movie");
                           },
                         ),
                       );
@@ -85,7 +87,9 @@ class CategoryPage extends StatelessWidget {
                           itemCount: categories.length,
                           itemBuilder: (context, index) {
                             return CategoryTile(
-                                title: categories[index]['name']);
+                                id: categories[index]['id'],
+                                title: categories[index]['name'],
+                                type: "tv");
                           },
                         ),
                       );
