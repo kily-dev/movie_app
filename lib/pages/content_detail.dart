@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class ContentDetail extends StatelessWidget {
@@ -14,12 +15,32 @@ class ContentDetail extends StatelessWidget {
   final String name;
   final String type;
 
+  final numberFormatter = NumberFormat("#,##0");
+  final millionFormatter = NumberFormat("#,##0.0M");
+  final billionFormatter = NumberFormat("#,##0.0B");
+
   ContentDetail({
     required this.id,
     required this.name,
     required this.type,
     super.key,
   });
+
+  String formatAmount(int? amount) {
+    if (amount == null || amount == 0) {
+      return "No Information";
+    }
+    if (amount >= 1000000000) {
+      // Format as billions
+      return billionFormatter.format(amount / 1000000000);
+    } else if (amount >= 1000000) {
+      // Format as millions
+      return millionFormatter.format(amount / 1000000);
+    } else {
+      // Format with commas
+      return numberFormatter.format(amount);
+    }
+  }
 
   Future<Map<dynamic, dynamic>> getFuture() async {
     if (type == "tv") {
@@ -64,7 +85,7 @@ class ContentDetail extends StatelessWidget {
                           ), // Handle errors gracefully
                         ),
                         Text(
-                          name,
+                          details["original_title"]?.toString() ?? name,
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -75,15 +96,14 @@ class ContentDetail extends StatelessWidget {
                           child: Row(
                             children: [
                               SizedBox(
-                                height: 275,
+                                height: 200,
                                 child: ClipRRect(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(24)),
                                   child: Image.network(
                                     // ignore: prefer_interpolation_to_compose_strings
                                     'https://image.tmdb.org/t/p/w500' +
-                                        details[
-                                            "poster_path"], // Construct the full URL
+                                        details["poster_path"],
 
                                     fit: BoxFit.fill, // Adjust the image fit
                                     errorBuilder:
@@ -91,7 +111,7 @@ class ContentDetail extends StatelessWidget {
                                             const Icon(
                                       Icons.broken_image,
                                       color: Colors.grey,
-                                      size: 50,
+                                      size: 200,
                                     ), // Handle errors gracefully
                                   ),
                                 ),
@@ -99,134 +119,90 @@ class ContentDetail extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.all(20),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Original Title: ",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
-                                        ),
-                                        Text(
-                                          details["original_title"].toString(),
-                                          style: TextStyle(fontSize: 16),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Popularity: ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                              fontSize: 18),
                                         ),
                                         Text(
                                           details["popularity"].toString(),
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 18),
                                         )
                                       ],
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Release Date: ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                              fontSize: 18),
                                         ),
                                         Text(
                                           details["release_date"].toString(),
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 18),
                                         )
                                       ],
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Official Website: ",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
-                                        ),
-                                        Text(
-                                          details["homepage"].toString(),
-                                          style: TextStyle(fontSize: 16),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Budget: ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                              fontSize: 18),
                                         ),
                                         Text(
-                                          details["budget"].toString(),
-                                          style: TextStyle(fontSize: 16),
+                                          formatAmount(details["budget"]),
+                                          style: TextStyle(fontSize: 18),
                                         )
                                       ],
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Box Office: ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                              fontSize: 18),
                                         ),
                                         Text(
-                                          details["revenue"].toString(),
-                                          style: TextStyle(fontSize: 16),
+                                          formatAmount(details["revenue"]),
+                                          style: TextStyle(fontSize: 18),
                                         )
                                       ],
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Runtime: ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                              fontSize: 18),
                                         ),
                                         Text(
                                           "${details["runtime"]} minutes",
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 18),
                                         )
                                       ],
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Language: ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                              fontSize: 18),
                                         ),
                                         Text(
                                           details["spoken_languages"][0]
                                               ["english_name"],
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 18),
                                         )
                                       ],
                                     ),
@@ -240,10 +216,31 @@ class ContentDetail extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 48),
                           child: Column(
                             children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    "Official Website: ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text(
+                                    details["homepage"].toString(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.blue,
+                                    ),
+                                    overflow: TextOverflow.visible,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
                               Text(
                                 "Overview:",
                                 style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               Text(details["overview"]),
                             ],
